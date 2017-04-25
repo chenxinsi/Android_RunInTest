@@ -38,7 +38,6 @@ public class VibrateTestActivity extends BaseActivity{
 	private static  boolean mTestSuccess  = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		vibrateTestActivity = new VibrateTestActivity();
 		vibrateTestActivity.isMonkeyRunning(TAG, "onCreate", VibrateTestActivity.this);
@@ -70,11 +69,7 @@ public class VibrateTestActivity extends BaseActivity{
             LogRuningTest.printError(TAG, "reason:" + "Vibrator is not existed", this);
             mTestSuccess = false ;
 		}
-		
-		
-		
 		mLCDHandler.sendEmptyMessageDelayed(1, delayTime);
-		
 	}
 	
 	@Override
@@ -100,12 +95,9 @@ public class VibrateTestActivity extends BaseActivity{
 			goToLCDtest();
 			finish();
 			super.handleMessage(msg);
-		};
+		}
 	};
-	
-	
-	
-	
+
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

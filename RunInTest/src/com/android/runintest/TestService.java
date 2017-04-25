@@ -75,6 +75,7 @@ public class TestService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        LogRuningTest.printInfo(TAG, "onCreate", this);
         sInstance = this;
         initBroadcastReceiver();
         mSharedPreferences = this.getSharedPreferences("runintest", Activity.MODE_PRIVATE);
@@ -88,10 +89,10 @@ public class TestService extends Service {
 
     @Override
     public void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
         this.unregisterReceiver(mTestReceiver);
         mBatteryHandler.removeCallbacksAndMessages(null);
+        LogRuningTest.printInfo(TAG, "unregister BroadcastReceiver ", sInstance);
         LogRuningTest.printInfo(TAG, "onDestroy", sInstance);
         SystemProperties.set("ctl.start", "charging_enable");
     }

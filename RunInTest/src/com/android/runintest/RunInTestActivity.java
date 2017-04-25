@@ -35,6 +35,8 @@ public class RunInTestActivity extends BaseActivity{
 
     private  EditText inputRebootCount ;
 
+    private RunInTestActivity runInTestActivity;
+
     private class CancelTestingListener implements OnClickListener {
         @Override
         public void onClick(DialogInterface dialog, int whichButton) {
@@ -42,12 +44,10 @@ public class RunInTestActivity extends BaseActivity{
             SharedPreferences.Editor editor = mSharedPreferences.edit();
             editor.putBoolean("startRunInTest", false);
             editor.commit();
-            Intent startBattaryService = new Intent(RunInTestActivity.this, TestService.class);
-            RunInTestActivity.this.stopService(startBattaryService);
+            CommonUtil.stopTestService(RunInTestActivity.this, TAG);
             RunInTestActivity.this.finish();
         }
     }
-
 
     private class CheckStartListener implements OnClickListener {
         @Override
@@ -69,6 +69,8 @@ public class RunInTestActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        runInTestActivity = new RunInTestActivity();
+        runInTestActivity.isMonkeyRunning(TAG, "onCreate", this);
         setContentView(R.layout.activity_run_in_test);
         LogRuningTest.printDebug(TAG, "onCreate  start  RunInTestActivity ", this);
         mSharedPreferences = this.getSharedPreferences("runintest", Activity.MODE_PRIVATE);
@@ -79,7 +81,7 @@ public class RunInTestActivity extends BaseActivity{
         
         inputRebootCount = new EditText(RunInTestActivity.this);
         inputRebootCount.setFocusable(true);
-        inputRebootCount.setText("10");
+        inputRebootCount.setText("2");
         inputRebootCount.setVisibility(View.INVISIBLE);
         inputRebootCount.setKeyListener(new NumberKeyListener() {
 
@@ -107,6 +109,7 @@ public class RunInTestActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        runInTestActivity.isMonkeyRunning(TAG, "onResume", this);
         CommonUtil.acquireWakeLock(TAG, this);
     }
 
@@ -122,8 +125,6 @@ public class RunInTestActivity extends BaseActivity{
         KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("");
         keyguardLock.disableKeyguard();
         mLockPatternUtils.setLockScreenDisabled(true, UserHandle.myUserId());
-        Intent intent = new Intent("com.tcl.mie.launcher3.action.unlock");
-        sendBroadcast(intent);
     }
 
     private void goToRebootTestActivity(){

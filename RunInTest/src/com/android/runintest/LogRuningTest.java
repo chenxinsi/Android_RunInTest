@@ -17,7 +17,8 @@ public class LogRuningTest{
 
     private static final String TAG = "LogRuningTest";
 
-    private static final String FILE_DIR = "/sdcard/aging";
+    //private static final String FILE_DIR = "/sdcard/aging";/storage/emulated/0
+    private static final String FILE_DIR = "/storage/emulated/0";
     private static final String FILE_NAME = "Log_runningtest.txt";
 
     private LogRuningTest() {}

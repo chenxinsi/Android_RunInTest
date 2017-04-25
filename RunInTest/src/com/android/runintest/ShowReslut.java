@@ -82,14 +82,12 @@ public class ShowReslut extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case SAVE_TO_NV:
-                /* < 0070746 xuyinwen 20150916 begin */
                 LogRuningTest.printDebug(TAG, "mSaveNVHandler:mIsPass = " + mIsPass, ShowReslut.this);
                 LogRuningTest.printDebug(TAG, "mSaveNVHandler:I2CTest.saveReslut(mIsPass, ShowReslut.this) = " + I2CTest.saveReslut(mIsPass, ShowReslut.this), ShowReslut.this);
                 if (!I2CTest.saveReslut(mIsPass, ShowReslut.this)) {
                     LogRuningTest.printDebug(TAG, "mSaveNVHandler:mIsPass = " + mIsPass, ShowReslut.this);
                     mSaveNVHandler.sendEmptyMessageDelayed(SAVE_TO_NV, DELAY_SAVE_TIME);
                 }
-                /* 0070746 xuyinwen 20150916 end > */
                 break;
             }
             super.handleMessage(msg);

@@ -33,9 +33,12 @@ public class RebootTestActivity extends BaseActivity{
 	private static boolean mTestSuccess = true;
 	
 	private static int runTimes ;
+	private RebootTestActivity rebootTestActivity;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		rebootTestActivity = new RebootTestActivity();
+		rebootTestActivity.isMonkeyRunning(TAG, "onCreate", this);
 		LogRuningTest.printDebug(TAG, "onCreate  start  RebootTestActivity ", this);
 		mSharedPreferences = this.getSharedPreferences("runintest", Activity.MODE_PRIVATE);
 		mLockPatternUtils = new LockPatternUtils(this);
@@ -56,8 +59,8 @@ public class RebootTestActivity extends BaseActivity{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		rebootTestActivity.isMonkeyRunning(TAG, "onResume", this);
 		CommonUtil.acquireWakeLock(TAG, this);
-
 	}
 
 	@Override
@@ -145,5 +148,4 @@ public class RebootTestActivity extends BaseActivity{
 	        LogRuningTest.printInfo(TAG, "saveReBootCount currentRebootCount " + mRebootCount, this);
 	        LogRuningTest.printInfo(TAG, "saveReBootCount battleryLevel " + batteryLevel, this);
 	}
-
 }

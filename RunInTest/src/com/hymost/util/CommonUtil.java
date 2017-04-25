@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class CommonUtil {
     public static PowerManager.WakeLock wakeLock;
+
+    public static Intent testService;
     //Get power lock, Keep the screen bright
     public static  void acquireWakeLock(String TAG, Context context){
 
@@ -26,7 +28,6 @@ public class CommonUtil {
                 wakeLock.acquire();
             }
         }
-
     }
 
     //Release power lock
@@ -40,16 +41,29 @@ public class CommonUtil {
 
     }
 
-    //Open TestService service
+    //Stop TestService
+    public static void stopTestService(Context mContext, String TAG){
+        String className = "com.android.runintest.TestService";
+        LogRuningTest.printInfo(TAG, "TestService isRunning:" +
+                isRunningTestService(mContext, className), mContext);
+        if(isRunningTestService(mContext, className)){
+            if(testService != null) {
+                mContext.stopService(testService);
+                LogRuningTest.printInfo(TAG, TAG + "stop TestService", mContext);
+            }
+        }
+    }
+
+    //Open TestService
     public static void startTestService(Context mContext, String TAG) {
 
         String className = "com.android.runintest.TestService";
         LogRuningTest.printInfo(TAG, "TestService isRunning:" +
                 isRunningTestService(mContext, className), mContext);
         if(!isRunningTestService(mContext, className)) {
-            Intent testService = new Intent(mContext, TestService.class);
+            testService = new Intent(mContext, TestService.class);
             mContext.startService(testService);
-            LogRuningTest.printInfo(TAG, TAG + " start TestService", mContext);
+            LogRuningTest.printInfo(TAG, TAG + "start TestService", mContext);
         }
 
     }
@@ -74,7 +88,6 @@ public class CommonUtil {
             }
         }
         return isRunning;
-
     }
 
 }

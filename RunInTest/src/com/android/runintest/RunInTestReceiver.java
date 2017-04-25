@@ -4,9 +4,7 @@ package com.android.runintest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.app.Activity;
 import android.os.SystemClock;
 
@@ -17,15 +15,11 @@ public class RunInTestReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO Auto-generated method stub
         if (intent.getAction().equals(ACTION_BOOT)) {
             SharedPreferences sharedPreferences = context.getSharedPreferences("runintest", Activity.MODE_PRIVATE);
             boolean runInTestStarted = sharedPreferences.getBoolean("startRunInTest", false);
-            boolean ddrTestStarted = sharedPreferences.getBoolean("ddrTestStarted", false);
-            /* < 0071219 xuyinwen 20150918 begin */
             long rebootTime = SystemClock.elapsedRealtime();
             LogRuningTest.printInfo(TAG, "rebootTime " + rebootTime, context);
-            /* 0071219 xuyinwen 20150918 end > */
             LogRuningTest.printInfo(TAG, "runInTestStarted " + runInTestStarted, context);
 
             if (runInTestStarted) {
@@ -35,6 +29,4 @@ public class RunInTestReceiver extends BroadcastReceiver {
             }
         }
     }
-	
-
 }

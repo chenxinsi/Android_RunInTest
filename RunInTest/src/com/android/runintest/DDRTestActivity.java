@@ -23,6 +23,7 @@ import android.os.SystemProperties;
 /* 0068595 xuyinwen 20150824 end > */
 /* < 0071221 xuyinwen 20150918 begin */
 import android.provider.Settings;
+import com.hymost.util.CommonUtil;
 /* 0071221 xuyinwen 20150918 end > */
 
 public class DDRTestActivity extends BaseActivity{
@@ -67,7 +68,7 @@ public class DDRTestActivity extends BaseActivity{
             goToRecoveryMode();
             //mTestHandler.sendEmptyMessageDelayed(GO_TO_RESULT, DELAY_TIME);
         } else {
-            startTestService();
+            CommonUtil.startTestService(this, TAG);
             checkTestResult();
             saveDDRFailLog();
             mTestHandler.sendEmptyMessageDelayed(GO_TO_RESULT, DELAY_TIME);
@@ -108,22 +109,13 @@ public class DDRTestActivity extends BaseActivity{
         }
     };
 
-    private void startTestService() {
-        LogRuningTest.printDebug(TAG, "DDR startTestService", this);
-        Intent testService = new Intent(this, TestService.class);
-        this.startService(testService);
-        LogRuningTest.printInfo(TAG, "start TestService", this);
-    }
-
     private void goToShowResult() {
         LogRuningTest.printInfo(TAG, "goToShowResult mDDRSuccess =" + mDDRSuccess, this);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean("rebootStatus", false);
-        /* < 0067632 xuyinwen 20150813 begin */
         if (!mDDRSuccess) {
             editor.putBoolean("DDR_test", mDDRSuccess);
         }
-        /* 0067632 xuyinwen 20150813 end > */
         editor.commit();
         //Intent intent = new Intent(TestService.ACTION_SHOW_RESULT);
         //sendBroadcast(intent);
